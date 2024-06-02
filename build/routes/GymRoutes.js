@@ -13,9 +13,9 @@ class GymRoutes {
     config() {
         this.router.get('/', gymController_1.default.list);
         this.router.get('/:id', gymController_1.default.getOne);
-        // this.router.post('/', gymController.create);
-        // this.router.put('/:id', gymController.update);
-        // this.router.delete('/:id', gymController.delete);
+        this.router.post('/', gymController_1.default.create);
+        this.router.put('/:id', gymController_1.default.update);
+        this.router.delete('/:id', gymController_1.default.delete);
     }
 }
 const gymRoutes = new GymRoutes();
