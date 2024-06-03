@@ -17,8 +17,15 @@ class GymController {
     list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { table } = req.query;
-            const clientes = yield database_1.default.query(`SELECT * from ${table}`);
-            res.send({ success: true, message: "Tabla listada", data: clientes[0] });
+            var data = "";
+            console.log(table);
+            if (table == "clientes") {
+                data = yield database_1.default.query(`SELECT clientes.id, tipos_documentos.nombre AS documentos_id, clientes.identificacion, clientes.nombres, clientes.apellidos, clientes.telefono, clientes.email, clientes.nota, clientes.estado from ${table} INNER JOIN tipos_documentos ON clientes.documentos_id = tipos_documentos.id`);
+            }
+            else {
+                data = yield database_1.default.query(`SELECT * from ${table}`);
+            }
+            res.send({ success: true, message: "Tabla listada", data: data[0] });
         });
     }
     getOne(req, res) {

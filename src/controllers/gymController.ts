@@ -6,8 +6,14 @@ class GymController {
 
     public async list (req: Request, res: Response): Promise<void> {
         const { table } = req.query
-        const clientes = await pool.query(`SELECT * from ${table}`)
-        res.send({success: true, message: "Tabla listada", data: clientes[0]})
+        var data: any = "";
+        console.log(table)
+        if(table == "clientes"){
+            data = await pool.query(`SELECT clientes.id, tipos_documentos.nombre AS documentos_id, clientes.identificacion, clientes.nombres, clientes.apellidos, clientes.telefono, clientes.email, clientes.nota, clientes.estado from ${table} INNER JOIN tipos_documentos ON clientes.documentos_id = tipos_documentos.id`)
+        } else {
+            data = await pool.query(`SELECT * from ${table}`)
+        }
+        res.send({success: true, message: "Tabla listada", data: data[0]})
     }
 
     public async getOne (req: Request, res: Response): Promise<void> {
