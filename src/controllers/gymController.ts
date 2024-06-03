@@ -33,21 +33,21 @@ class GymController {
         const { table } = req.query
         console.log(req.body)
         await pool.query(`INSERT INTO ${table} set ?`, [req.body])
-        res.send({message: "Guardado con exito."})
+        res.send({success: true, message: "Guardado con exito."})
     }
 
     public async update (req: Request, res: Response): Promise<void> {
         const { table } = req.query
         const { id } = req.params
         await pool.query(`UPDATE ${table} set ? WHERE id = ${id}`, [req.body])
-        res.json({message: "Actualizado con exito."})
+        res.json({success: true, message: "Actualizado con exito."})
     }
 
     public async delete (req: Request, res: Response): Promise<void> {
         const { table } = req.query
         const { id } = req.params
         await pool.query(`DELETE from ${table} WHERE id = ${id}`)
-        res.send({message: "Aliminado con exito."})
+        res.send({success: true, message: "Aliminado con exito."})
     }
 }
 

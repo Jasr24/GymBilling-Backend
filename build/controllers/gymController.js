@@ -48,7 +48,7 @@ class GymController {
             const { table } = req.query;
             console.log(req.body);
             yield database_1.default.query(`INSERT INTO ${table} set ?`, [req.body]);
-            res.send({ message: "Guardado con exito." });
+            res.send({ success: true, message: "Guardado con exito." });
         });
     }
     update(req, res) {
@@ -56,7 +56,7 @@ class GymController {
             const { table } = req.query;
             const { id } = req.params;
             yield database_1.default.query(`UPDATE ${table} set ? WHERE id = ${id}`, [req.body]);
-            res.json({ message: "Actualizado con exito." });
+            res.json({ success: true, message: "Actualizado con exito." });
         });
     }
     delete(req, res) {
@@ -64,7 +64,7 @@ class GymController {
             const { table } = req.query;
             const { id } = req.params;
             yield database_1.default.query(`DELETE from ${table} WHERE id = ${id}`);
-            res.send({ message: "Aliminado con exito." });
+            res.send({ success: true, message: "Aliminado con exito." });
         });
     }
 }
