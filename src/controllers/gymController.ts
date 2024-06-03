@@ -9,7 +9,7 @@ class GymController {
         var data: any = "";
         console.log(table)
         if(table == "clientes"){
-            data = await pool.query(`SELECT clientes.id, tipos_documentos.nombre AS documentos_id, clientes.identificacion, clientes.nombres, clientes.apellidos, clientes.telefono, clientes.email, clientes.nota, clientes.estado from ${table} INNER JOIN tipos_documentos ON clientes.documentos_id = tipos_documentos.id`)
+            data = await pool.query(`SELECT clientes.id, tipos_documentos.nombre AS documento_id, clientes.identificacion, clientes.nombres, clientes.apellidos, clientes.telefono, clientes.email, clientes.nota, clientes.estado from ${table} INNER JOIN tipos_documentos ON clientes.documento_id = tipos_documentos.id`)
         } else {
             data = await pool.query(`SELECT * from ${table}`)
         }
