@@ -26,15 +26,15 @@ class IndexController {
             const encryptedContraseña = encryptionService_1.default.encrypt(contraseña);
             const administrador = yield database_1.default.query(`SELECT usuario, correo from users_admin WHERE usuario = "${usuario}" AND contraseña = "${encryptedContraseña}"`);
             if (administrador[0].length > 0) {
-                res.send({ message: "Administrador logueado exitosamente", administrador: administrador[0] });
+                res.send({ success: true, status: 1, message: "Administrador logueado exitosamente", administrador: administrador[0] });
             }
             else {
                 const administrador = yield database_1.default.query(`SELECT * from users_admin WHERE usuario = ${usuario}`);
                 if (administrador[0].length > 0) {
-                    res.send({ message: "Contraseña incorrecta." });
+                    res.send({ success: true, status: 0, message: "Contraseña incorrecta." });
                 }
                 else {
-                    res.send({ message: "Usuario no existe." });
+                    res.send({ success: true, status: 0, message: "Usuario no existe." });
                 }
             }
         });
