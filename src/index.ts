@@ -25,8 +25,8 @@ class Serve {
     }
 
     routes(): void {
-        this.app.use(indexRoutes);
-        this.app.use('/api/gym/gettable',GymRoutes);
+        this.app.use('/api/gym', indexRoutes);
+        this.app.use('/api/gym/gettable', GymRoutes);
     }
 
     start(): void {
