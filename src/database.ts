@@ -4,11 +4,11 @@ const mysql = require('mysql2/promise');
 const pool = mysql.createPool(keys.database);
 
 pool.getConnection()
-    .then(conn => {
+    .then((conn: { release: () => void; }) => {
         console.log('Conectado a la base de datos');
         conn.release();
     })
-    .catch(err => {
+    .catch((err: any) => {
         console.error('Error conectando a la base de datos:', err);
     });
 

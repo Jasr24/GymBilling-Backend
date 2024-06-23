@@ -59,7 +59,7 @@ class IndexController {
             };
 
             // Enviar el correo electrónico
-            transport.sendMail(mailOptions, (error, info) => {
+            transport.sendMail(mailOptions, (error: any, info: any) => {
                 if (error) {
                     console.error("Error al enviar el correo:", error);
                     res.status(500).send({ success: false, status: 0, message: "Error al enviar el correo." });
