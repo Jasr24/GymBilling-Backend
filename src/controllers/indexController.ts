@@ -29,7 +29,7 @@ class IndexController {
         }
     }
 
-    public async recuperarContraseña(req: Request, res: Response): Promise<void> {
+    public async codigoRecuperarContraseña(req: Request, res: Response): Promise<void> {
         const { usuario } = req.body;
 
         // Consulta para obtener el administrador por el usuario
@@ -70,6 +70,23 @@ class IndexController {
             });
         } else {
             res.send({ success: false, status: 0, message: "Usuario no encontrado." });
+        }
+    }
+
+    public async cambiarContraseñacodigo(req: Request, res: Response): Promise<void> {
+        const { usuario } = req.body;
+        const { contraseña } = req.body;
+        const { contraseñaTemporal } = req.body;
+
+        // Consulta para obtener el administrador por el usuario
+        let administrador = await pool.query(`SELECT * FROM users_admin WHERE usuario = ${pool.escape(usuario)} AND contraseña_temporal = "${contraseñaTemporal}"`);
+
+        if (administrador[0].length > 0) {
+            const encryptedContraseña = encryptionService.encrypt(contraseña);
+            await pool.query(`UPDATE users_admin SET contraseña = '${encryptedContraseña}', contraseña_temporal = ''  WHERE id = ${administrador[0][0].id}`);
+            res.send({ success: true, status: 1, message: "Contraseña cambiada correctamente." });
+        } else {
+            res.send({ success: false, status: 0, message: "Contraseña temporal incorrecta." });
         }
     }
 }

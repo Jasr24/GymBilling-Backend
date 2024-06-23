@@ -12,7 +12,8 @@ class IndexRoutes {
     config(): void {
         this.router.get('/', indexController.index);
         this.router.post('/login', indexController.login);
-        this.router.post('/recuperar/password', indexController.recuperarContraseña);
+        this.router.post('/recuperar/password', indexController.codigoRecuperarContraseña);
+        this.router.post('/cambiar/password', indexController.cambiarContraseñacodigo);
     }
 
 }

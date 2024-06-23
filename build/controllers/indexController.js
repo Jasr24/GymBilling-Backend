@@ -41,7 +41,7 @@ class IndexController {
             }
         });
     }
-    recuperarContraseña(req, res) {
+    codigoRecuperarContraseña(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const { usuario } = req.body;
             // Consulta para obtener el administrador por el usuario
@@ -80,6 +80,23 @@ class IndexController {
             }
             else {
                 res.send({ success: false, status: 0, message: "Usuario no encontrado." });
+            }
+        });
+    }
+    cambiarContraseñacodigo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { usuario } = req.body;
+            const { contraseña } = req.body;
+            const { contraseñaTemporal } = req.body;
+            // Consulta para obtener el administrador por el usuario
+            let administrador = yield database_1.default.query(`SELECT * FROM users_admin WHERE usuario = ${database_1.default.escape(usuario)} AND contraseña_temporal = "${contraseñaTemporal}"`);
+            if (administrador[0].length > 0) {
+                const encryptedContraseña = encryptionService_1.default.encrypt(contraseña);
+                yield database_1.default.query(`UPDATE users_admin SET contraseña = '${encryptedContraseña}', contraseña_temporal = ''  WHERE id = ${administrador[0][0].id}`);
+                res.send({ success: true, status: 1, message: "Contraseña cambiada correctamente." });
+            }
+            else {
+                res.send({ success: false, status: 0, message: "Contraseña temporal incorrecta." });
             }
         });
     }
